@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="Images/Supp_fig_CRF_schematic.tiff" width="100%" />
-
 This repository contains `R` scripts to extract data and replicate
 Conditional Random Fields analyses used in Clark *et al* (IN PRESS in
 *Nature Climate Change*)
@@ -80,3 +78,6 @@ distribution of Mediterranean fishes, and environmental data. Ecology,
 
 Clark, N.J., Wells, K. & Lindberg, O. (2018) MRFcov: Markov Random
 Fields with additional covariates. R package version 1.0. GitHub.
+
+*This project is licensed under the terms of the GNU General Public
+License (GNU GPLv3)*
