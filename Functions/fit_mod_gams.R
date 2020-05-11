@@ -5,6 +5,7 @@ fit_mod_gams = function(climate_data, modularity_data, n_cores = 2){
   library(dplyr)
   library(mgcv)
   library(visreg)
+  library(gstat)
   
   #### Process supplied data into a dataframe for fitting GAMs ####
   cat('Building dataset for GAM modelling...\n')

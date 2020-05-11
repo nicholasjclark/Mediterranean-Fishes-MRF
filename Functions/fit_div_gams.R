@@ -5,6 +5,7 @@ fit_div_gams = function(climate_data, phylo_div, functional_div, n_cores = 2, th
   library(dplyr)
   library(mgcv)
   library(ggplot2)
+  library(gstat)
   
   #### Process supplied data into a dataframe for fitting GAMs ####
   cat('Building dataset for GAM modelling...\n')
