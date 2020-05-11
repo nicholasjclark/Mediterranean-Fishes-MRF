@@ -12,10 +12,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r echo = FALSE, out.width = '100%'}
-knitr::include_graphics('Images/Supp_fig_CRF_schematic.tiff')
-```
-
 This repository contains `R` scripts to extract data and replicate Conditional Random Fields analyses used in Clark *et al* (IN PRESS in *Nature Climate Change*)  
   
 **Workflow**  
@@ -50,7 +46,9 @@ The workflow to extract primary data and complete analyses is as follows:
 **References**  
 Albouy, C., Lasram, F.B.R., Velez, L., Guilhaumon, F., Meynard, C.N., Boyer, S., Benestan, L., Mouquet, N., Douzery, E., Aznar, R., Troussellier, M., Somot, S., Leprieur, F., Le Loc'h, F. & Mouillot, D. (2015) FishMed: traits, phylogeny, current and projected species distribution of Mediterranean fishes, and environmental data. Ecology, 96, 2312-2313.  
   
-Clark, N.J., Wells, K. & Lindberg, O. (2018) MRFcov: Markov Random Fields with additional covariates. R package version 1.0. GitHub.
+Clark, N.J., Wells, K. & Lindberg, O. (2018) MRFcov: Markov Random Fields with additional covariates. R package version 1.0. GitHub.  
+  
+*This project is licensed under the terms of the GNU General Public License (GNU GPLv3)*
 
 
 
