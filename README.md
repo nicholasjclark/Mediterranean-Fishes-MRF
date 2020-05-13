@@ -2,8 +2,32 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 This repository contains `R` scripts to extract data and replicate
-Conditional Random Fields analyses used in Clark *et al* (IN PRESS in
-*Nature Climate Change*)
+Conditional Random Fields analyses used in Clark *et al* “Rapid winter
+warming could disrupt coastal marine fish community structure” (IN PRESS
+in *Nature Climate Change*)
+
+**Overview**  
+We apply Conditional Random Fields models to an open-source dataset of
+fish distributions to show that winter sea surface warming strongly
+predicts variation in coastal fish community compositions in the
+Mediterranean Sea. Specifically, we formulate an undirected network
+model that accounts for all combinations of other species and
+environmental covariates (winter and summer sea surface temperatures) on
+a species’ occurrence probability. By allowing species’ co-occurrence
+associations to vary in response to temperature changes, our model can
+generate future biodiversity predictions and identify putative,
+biologically-meaningful mechanisms that underlie our finding of changes
+in niche filling across seasonal temperature gradients.
+
+**Authors**  
+This work was developed through a collaboration between Nicholas Clark,
+James Kerry and Ceridwen Fraser. The `R` code was developed and is
+maintained by Nicholas Clark.
+
+**Contacts**  
+Please contact [Nicholas
+Clark](https://researchers.uq.edu.au/researcher/15140) with any
+questions
 
 **Workflow**  
 The workflow to extract primary data and complete analyses is as
@@ -11,12 +35,13 @@ follows:
 
 1.  Download open-source data on coastal Mediterranean fish species
     occurrences, functional traits and phylogenetic relationships, as
-    well as historical and projected Sea Surface Temperature data from
-    the [FishMed](http://www.esapubs.org/archive/ecol/E096/203/)
+    well as historical and projected Intergovernmental Panel on Climate
+    Change (IPCC) SRES A2 Sea Surface Temperature data, from the
+    open-source [FishMed](http://www.esapubs.org/archive/ecol/E096/203/)
     database (Albouy et al. 2015). Note that these data are licensed and
-    cannot be stored in this repository. However, `R` functions in the
-    `Functions` directory are available to download the data into your
-    working environment. Please follow steps in
+    cannot be directly stored in this repository. However, `R` functions
+    in the `Functions` directory are available to download the data into
+    your working environment. Please follow steps in
     `Workflow/Appendix_S1_Datacollation.pdf` to extract the data
 
 2.  Run Conditional Random Fields models using functions available in
