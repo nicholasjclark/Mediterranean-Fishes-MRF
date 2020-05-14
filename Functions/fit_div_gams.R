@@ -1,6 +1,6 @@
-### Function to fit Generalised Additive Models (GAMs) to 
+#### Function to fit Generalised Additive Models (GAMs) to 
 # assess relationships between SST and spatial coordinates with 
-# predicted functional and phylogenetic diversity metrics
+# predicted functional and phylogenetic diversity metrics ####
 fit_div_gams = function(climate_data, phylo_div, functional_div, n_cores = 2, thin_plate = FALSE){
   library(dplyr)
   library(mgcv)
@@ -22,7 +22,7 @@ fit_div_gams = function(climate_data, phylo_div, functional_div, n_cores = 2, th
   data.var = data.frame(gam.dat)
   sp::coordinates(data.var) = ~Longitude+Latitude
   var.mod.raw <- variogram(functional_div ~ Longitude+Latitude, data = data.var)
-  var.fit.raw = fit.variogram(var.mod.raw, model = vgm("Sph"))
+  var.fit.raw = gstat::fit.variogram(var.mod.raw, model = gstat::vgm("Sph"))
   
   if(thin_plate){
   #### Fit GAMs using the default thin plate regression spline for 
@@ -105,7 +105,7 @@ fit_div_gams = function(climate_data, phylo_div, functional_div, n_cores = 2, th
                             Latitude = gam.dat$Latitude)
   sp::coordinates(data.var.gam) = ~Longitude+Latitude
   var.mod <- variogram(resids ~ Longitude+Latitude, data = data.var.gam)
-  var.fit = fit.variogram(var.mod, model = vgm("Sph"))
+  var.fit = gstat::fit.variogram(var.mod, model = gstat::vgm("Sph"))
   
   # Nugget:sill ratio
   # Low ratio = large part of the variance introduced spatially, implying a strong spatial dependence
@@ -113,7 +113,7 @@ fit_div_gams = function(climate_data, phylo_div, functional_div, n_cores = 2, th
   raw.spatial.autocorr <- var.fit.raw$psill[1] / sum(var.fit.raw$psill) # without the model
   resid.spatial.autocorr <- var.fit$psill[1] / sum(var.fit$psill) # after modelling
  
-   # Extract model summaries
+  # Extract model summaries
   fdiv.summary <- summary(best.fdiv.gam)
   pdiv.summary <- summary(best.pdiv.gam)
   

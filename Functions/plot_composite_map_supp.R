@@ -1,4 +1,4 @@
-#### Function to map model predictions for past and future projections
+#### Function to map model predictions for past and future projections ####
 plot_composite_map_supp = function(coords, past_obs, future_obs, 
                               metric = 'richness'){
   library(ggplot2)
@@ -59,7 +59,7 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
   rects <- data.frame(xstart = c(-6, 26.5), xend = c(3, 36.25), 
                       ystart = c(42, 39), yend = c(45.75, 45.75))
   
-  # Prepare the datasets by cutting predictions into breaks
+  # Richness plot
   if(metric == 'richness'){
     # Create a raster for plotting
     empty_raster <- raster::raster(nrow = 105, ncols = 275,  
@@ -212,10 +212,6 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
       geom_tile(data = sst_raster_df, aes(fill = Col_break_change,
                                           x = Longitude, y = Latitude),
                 size = 0.85) +
-      #geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-       #                                 color = Col_break_change),
-        #         size = 0.15, alpha = I(0.7),
-         #        shape = 15) +
       geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                   ymin = ystart, ymax = yend),
                 fill = 'gray85', colour = 'gray85') +
@@ -241,6 +237,7 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
     
   } 
   if(metric %in% c('diversity', 'modularity')){
+    # Diversity or modularity plots use scaled metrics as they are less interpretable
     points.dat$Past.sc <- (points.dat$Past - mean(points.dat$Past)) / 
       sd(points.dat$Past)
     empty_raster <- raster::raster(nrow = 105, ncols = 275,  
@@ -262,11 +259,7 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
                                            max(sst_raster_df$Past.sc)),
                                 labels = c('very low','low', 'moderate', 
                                            'high','very high'))
-    #darkred <- pals::brewer.reds(10)[10]
-    #cols <- c(darkred, pals::kovesi.linear_kry_5_95_c72(7)[3:6])
-    #cols <- c(viridis::viridis(10)[c(10,9)], pals::ocean.speed(7)[5:7])
-    #names(cols) <- c('very low','low', 'moderate', 
-                         #'high','very high')
+
     cols <- rev(c(viridis::inferno(10)[c(5,7)],viridis::viridis(10)[c(10,8)],
                   viridis::plasma(5)[1]))
     names(cols) <- c('very low','low', 'moderate', 
@@ -276,10 +269,6 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
       geom_tile(data = sst_raster_df, aes(fill = Col_break,
                                           x = Longitude, y = Latitude),
                 size = 0.85) +
-     # geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-      #                                  color = Col_break),
-       #          size = 0.15, alpha = I(0.7),
-        #         shape = 15) +
       geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                   ymin = ystart, ymax = yend),
                 fill = 'gray85', colour = 'gray85') +
@@ -333,10 +322,6 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
       geom_tile(data = sst_raster_df, aes(fill = Col_break,
                                           x = Longitude, y = Latitude),
                 size = 0.85) +
-      # geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-      #                                  color = Col_break),
-      #          size = 0.15, alpha = I(0.7),
-      #         shape = 15) +
       geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                   ymin = ystart, ymax = yend),
                 fill = 'gray85', colour = 'gray85') +
@@ -385,10 +370,6 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
       geom_tile(data = sst_raster_df, aes(fill = Col_break_change,
                                           x = Longitude, y = Latitude),
                 size = 0.85) +
-      #geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-       #                                 color = Col_break_change),
-        #         size = 0.15, alpha = I(0.7),
-         #        shape = 15) +
       geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                   ymin = ystart, ymax = yend),
                 fill = 'gray85', colour = 'gray85') +
@@ -411,84 +392,9 @@ plot_composite_map_supp = function(coords, past_obs, future_obs,
                                  title.hjust = 1,
                                  override.aes = list(size = 1.3,
                                                      alpha = 1)))
-      #theme(legend.position = 'none')
   } 
-  # if(metric == 'modularity') {
-  #   points.dat$Past.sc <- (points.dat$Past - mean(points.dat$Past)) / 
-  #     sd(points.dat$Past)
-  #   points.dat$Col_break <- cut(points.dat$Past.sc, 
-  #                               breaks = c(min(points.dat$Past.sc) - 1,
-  #                                          -0.85, -0.25, 0.25, 0.85,
-  #                                          max(points.dat$Past.sc)),
-  #                               labels = c('very low','low', 'moderate', 
-  #                                          'high','very high'))
-  #   
-  #   obs_map <- ggplot() + coord_fixed() + xlab("") + ylab("") + 
-  #     theme_bw() +
-  #     geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-  #                                       color = Col_break),
-  #                size = 0.15, alpha = I(0.7),
-  #                shape = 15) +
-  #     geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
-  #                                 ymin = ystart, ymax = yend),
-  #               fill = 'gray85', colour = 'gray85') +
-  #     geom_polygon(data = med_map, aes(x = long, y = lat, 
-  #                                      group = group), 
-  #                  colour = "gray85", fill = "gray85",
-  #                  size = 0.25) +
-  #     scale_color_viridis(name = NULL, 
-  #                         discrete = T, drop = FALSE) +
-  #     theme(axis.text = element_text(size = 7)) +
-  #     scale_x_longitude(xmin = -3, xmax = 35, step = 7) +
-  #     scale_y_latitude(ymin = 30, ymax = 49, step = 5) +
-  #     labs(x = "", y = "") +
-  #     coord_map(projection = "rectangular", lat0 = 0,
-  #               xlim = c(-6, 36.25), ylim = c(30, 45.75)) +
-  #     theme(panel.grid.major = element_blank(),
-  #           panel.grid.minor = element_blank()) +
-  #     obs_legend_theme() +
-  #     guides(col = guide_legend(nrow = 5, reverse = T, title.vjust = 0,
-  #                               override.aes = list(size = 1.3,
-  #                                                   alpha = 1)))
-  #   
-  #   points.dat$Future.sc <- (points.dat$Future - mean(points.dat$Future)) / 
-  #     sd(points.dat$Future)
-  #   points.dat$Col_break_change <- cut(points.dat$Future.sc, 
-  #                                      breaks = c(min(points.dat$Past.sc) - 1,
-  #                                                 -0.85, -0.25, 0.25, 0.85,
-  #                                                 max(points.dat$Past.sc)),
-  #                                      labels = c('very low','low', 'moderate', 
-  #                                                 'high','very high'))
-  #   
-  #   change_map <- ggplot() + coord_fixed() + xlab("") + ylab("") + 
-  #     theme_bw() +
-  #     geom_point(data = points.dat, aes(x = Longitude, y = Latitude, 
-  #                                       color = Col_break_change),
-  #                size = 0.15, alpha = I(0.7),
-  #                shape = 15) +
-  #     geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
-  #                                 ymin = ystart, ymax = yend),
-  #               fill = 'gray85', colour = 'gray85') +
-  #     geom_polygon(data = med_map, aes(x = long, y = lat, 
-  #                                      group = group), 
-  #                  colour = "gray85", fill = "gray85",
-  #                  size = 0.25) +
-  #     scale_color_manual(name = NULL,
-  #                        values = viridis(5), drop = FALSE) +
-  #     theme(axis.text = element_text(size = 7)) +
-  #     scale_x_longitude(xmin = -3, xmax = 35, step = 7) +
-  #     scale_y_latitude(ymin = 30, ymax = 49, step = 5) +
-  #     labs(x = "", y = "") +
-  #     coord_map(projection = "rectangular", lat0 = 0,
-  #               xlim = c(-6, 36.25), ylim = c(30, 45.75)) +
-  #     theme(panel.grid.major = element_blank(),
-  #           panel.grid.minor = element_blank()) +
-  #     obs_legend_theme() + 
-  #     theme(legend.position = 'none')
-  #   
-  #   
-  # }
-  
+
+  # Return a list of the three ggplot objects
   list(obs_map, future_map, change_map)
   
 }

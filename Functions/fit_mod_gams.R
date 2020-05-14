@@ -1,6 +1,6 @@
-### Function to fit Generalised Additive Models (GAMs) to 
+#### Function to fit Generalised Additive Models (GAMs) to 
 # assess relationships between SST and spatial coordinates with 
-# predicted network modularity
+# predicted network modularity ####
 fit_mod_gams = function(climate_data, modularity_data, n_cores = 2){
   library(dplyr)
   library(mgcv)
@@ -23,7 +23,7 @@ fit_mod_gams = function(climate_data, modularity_data, n_cores = 2){
   data.var = data.frame(gam.dat)
   sp::coordinates(data.var) = ~Longitude+Latitude
   var.mod.raw <- variogram(modularity ~ Longitude+Latitude, data = data.var)
-  var.fit.raw = fit.variogram(var.mod.raw, model = vgm("Sph"))
+  var.fit.raw = gstat::fit.variogram(var.mod.raw, model = gstat::vgm("Sph"))
   
   #### Fit GAM using the default thin plate regression spline for 
   # the spatial term ####
@@ -33,7 +33,7 @@ fit_mod_gams = function(climate_data, modularity_data, n_cores = 2){
                           s(Longitude, Latitude, k = 100), 
                         data = gam.dat, discrete = T)
   
-  ##### Now fit GAMs using Gaussian process spatial splines (for comparison) ####
+  ##### Now fit GAM using Gaussian process spatial splines (for comparison) ####
   cat('Fitting GAM using Gaussian Process spatial regression splines...\n')
   mod.gam.gp <- mgcv::bam(modularity ~ s(Summer_SST, k = 50) + 
                              s(Winter_SST, k = 50) + 
@@ -69,7 +69,7 @@ fit_mod_gams = function(climate_data, modularity_data, n_cores = 2){
                             Latitude = gam.dat$Latitude)
   sp::coordinates(data.var.gam) = ~Longitude+Latitude
   var.mod <- variogram(resids ~ Longitude+Latitude, data = data.var.gam)
-  var.fit = fit.variogram(var.mod, model = vgm("Sph"))
+  var.fit = gstat::fit.variogram(var.mod, model = gstat::vgm("Sph"))
   
   # Nugget:sill ratio
   # Low ratio = large part of the variance introduced spatially, implying a strong spatial dependence

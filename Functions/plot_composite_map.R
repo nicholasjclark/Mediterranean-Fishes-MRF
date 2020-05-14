@@ -1,4 +1,4 @@
-#### Function to map model predictions for past and future projections
+#### Function to map model predictions for past and future projections ####
 plot_composite_map = function(coords, past_obs, future_obs, 
                               metric = 'richness'){
   library(ggplot2)
@@ -19,7 +19,6 @@ plot_composite_map = function(coords, past_obs, future_obs,
   obs_legend_theme = function(){ theme(legend.title = element_text(size = 6.5,
                                                                    hjust = 0.5),
                                        legend.text = element_text(size = 6.25),
-                                       #legend.key.size = unit(0.3, "cm"),
                                        legend.key.size = unit(0.2, 'cm'),
                                        legend.justification = c(1, 1), 
                                        legend.position = c(0.99, 0.99),
@@ -59,7 +58,7 @@ plot_composite_map = function(coords, past_obs, future_obs,
   rects <- data.frame(xstart = c(-6, 26.5), xend = c(3, 36.25), 
                       ystart = c(42, 39), yend = c(45.75, 45.75))
   
-  # Prepare the datasets by cutting predictions into breaks
+  # For plotting richness expected changes
   if(metric == 'richness'){
     # Create a raster for plotting
     empty_raster <- raster::raster(nrow = 105, ncols = 275,  
@@ -122,6 +121,7 @@ plot_composite_map = function(coords, past_obs, future_obs,
     
   } 
   if(metric == 'temp'){
+    # For SST expected changes
     empty_raster <- raster::raster(nrow = 105, ncols = 275,  
                                    ext = raster::extent(range(points.dat$Longitude),
                                                         range(points.dat$Latitude)))
@@ -177,6 +177,7 @@ plot_composite_map = function(coords, past_obs, future_obs,
     
   }
   if(metric %in% c('diversity', 'modularity')){
+    # For plotting diversity or modularity expected changes
     points.dat$Past.sc <- (points.dat$Past - mean(points.dat$Past)) / 
       sd(points.dat$Past)
     empty_raster <- raster::raster(nrow = 105, ncols = 275,  
@@ -187,6 +188,7 @@ plot_composite_map = function(coords, past_obs, future_obs,
                                        data = points.dat,
                                        proj4string = sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
     
+    # Plot scaled changes for these metrics as they are less interpretable
     points.dat$Future.sc <- (points.dat$Future - mean(points.dat$Future)) / 
       sd(points.dat$Future)
     points.dat$Change.sc <- points.dat$Future.sc - points.dat$Past.sc
@@ -267,6 +269,7 @@ plot_composite_map = function(coords, past_obs, future_obs,
     
   } 
   
+  # Return the ggplot object
   return(change_map)
   
 }

@@ -23,14 +23,13 @@ SST_changes <- obs_climate_dat %>%
 points.dat <- SST_changes %>%
   dplyr::select(Latitude, Longitude)
 
-# Download a world map and crop to the Mediterranean region
+# Download a world map and crop to the Mediterranean study region
 med_map <- map_data("world", xlim = c(-10, 50), ylim = c(25, 45))
 
 # General mapping theme
 obs_legend_theme = function(){ theme(legend.title = element_text(size = 7,
                                                                  hjust = 0.5),
                                      legend.text = element_text(size = 6.6),
-                                     #legend.key.size = unit(0.3, "cm"),
                                      legend.key.size = unit(0.25, 'cm'),
                                      legend.justification = c(1, 1), 
                                      legend.position = c(0.99, 0.99),
@@ -66,11 +65,11 @@ scale_y_latitude <- function(ymin=-90, ymax=90, step=0.5, ...) {
   return(scale_y_continuous("", breaks = ybreaks, labels = ylabels, expand = c(0, 0), ...))
 }
 
-# Create a map of the summer SST predictions
 # Breaks for background rectangles
 rects <- data.frame(xstart = c(-6, 26.5), xend = c(3, 36.25), 
                     ystart = c(42, 39), yend = c(45.75, 45.75))
 
+# Summer SST map
 if(summer){
   # Create a raster for plotting
   empty_raster <- raster::raster(nrow = 105, ncols = 275, 
@@ -87,7 +86,7 @@ if(summer){
   colnames(sst_raster_df) <- c("change_Summer_SST", "Longitude", "Latitude")
   rm(spdf, empty_raster, sst_raster, sst_raster_spdf)
   
-  # Set breaks for the plot colour categories
+  # Set informative breaks for the plot colour categories
   sst_raster_df$summer_break <- cut(sst_raster_df$change_Summer_SST, 
                                     breaks = c(-1, 0, 0.5, 1, 1.5, 2, 2.5, 
                                                max(SST_changes$change_Winter_SST)),
@@ -98,7 +97,6 @@ if(summer){
   
   # Set colours
   #devtools::install_github("kwstat/pals")
-  #sst_raster1.cols <- pals::brewer.rdbu(10)[c(1:3, 7:10)]; use rev
   darkred <- pals::brewer.reds(10)[10]
   cols <- c('white', pals::brewer.ylorrd(6)[2:6], darkred)
   names(cols) <- c('< 0.00','0.01-0.50', '0.51-1.00', 
@@ -112,9 +110,6 @@ plot_map <- ggplot() + coord_fixed() +
   geom_tile(data = sst_raster_df, aes(fill = summer_break,
                                 x = Longitude, y = Latitude),
             size = 0.85) +
-  #geom_point(data = SST_changes, aes(x = Longitude, y = Latitude, 
-                                    #color = summer_break),
-             #size = 0.25, alpha = I(0.7), shape = 15) +
   geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                               ymin = ystart, ymax = yend),
             fill = 'gray85', colour = 'gray85') +
@@ -125,10 +120,6 @@ plot_map <- ggplot() + coord_fixed() +
   scale_fill_manual(values = cols,
                        name = expression(paste(Delta~SST, ~degree,'C (1980-2040)')),
                     drop = FALSE) +
-  #scale_color_viridis(name = expression(paste(Delta~SST, ' (Celsius)')),
-                      #option = 'plasma',
-                      #discrete = T,
-                      #drop = FALSE) +
   theme(axis.text = element_text(size = 7)) +
   scale_x_longitude(xmin = -3, xmax = 35, step = 7) +
   scale_y_latitude(ymin = 30, ymax = 49, step = 5) +
@@ -138,13 +129,11 @@ plot_map <- ggplot() + coord_fixed() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()) +
   obs_legend_theme() +
-  #guides(col = guide_legend(nrow = 7, title.vjust = 0, reverse = T,
-                         #   override.aes = list(size = 1.5,
-                                               # alpha = 1))) +
   guides(fill = guide_legend(nrow = 7, title.vjust = 0, reverse = T,
                             override.aes = list(size = 0.8,
                                                 alpha = 1)))
 } else {
+  # Winter SST map (workflow is basically identical)
   empty_raster <- raster::raster(nrow = 105, ncols = 275,  
                                  ext = raster::extent(range(SST_changes$Longitude),
                                                       range(SST_changes$Latitude)))
@@ -167,7 +156,6 @@ plot_map <- ggplot() + coord_fixed() +
                                          '> 2.50'))
   
   # Create Winter SST map
-  #sst_raster1.cols <- pals::brewer.rdbu(10)[c(1:3, 7:10)]; use rev
   darkred <- pals::brewer.reds(10)[10]
   cols <- c('white', pals::brewer.ylorrd(6)[2:6], darkred)
   names(cols) <- c('< 0.00','0.01-0.50', '0.51-1.00', 
@@ -179,9 +167,6 @@ plot_map <- ggplot() + coord_fixed() +
     geom_tile(data = sst_raster_df, aes(fill = winter_break,
                                   x = Longitude, y = Latitude),
               size = 0.85) +
-    #geom_point(data = SST_changes, aes(x = Longitude, y = Latitude, 
-    #color = summer_break),
-    #size = 0.25, alpha = I(0.7), shape = 15) +
     geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                 ymin = ystart, ymax = yend),
               fill = 'gray85', colour = 'gray85') +
@@ -192,10 +177,6 @@ plot_map <- ggplot() + coord_fixed() +
     scale_fill_manual(values = cols,
                       name = expression(paste(Delta~SST, ~degree,'C (1980-2040)')),
                       drop = FALSE) +
-    #scale_color_viridis(name = expression(paste(Delta~SST, ' (Celsius)')),
-    #option = 'plasma',
-    #discrete = T,
-    #drop = FALSE) +
     theme(axis.text = element_text(size = 7)) +
     scale_x_longitude(xmin = -3, xmax = 35, step = 7) +
     scale_y_latitude(ymin = 30, ymax = 49, step = 5) +
@@ -205,12 +186,12 @@ plot_map <- ggplot() + coord_fixed() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank()) +
     obs_legend_theme() +
-    #theme(legend.position = 'none')
     guides(fill = guide_legend(nrow = 7, title.vjust = 0, reverse = T,
                                override.aes = list(size = 0.8,
                                                    alpha = 1)))
   
 }
 
+# Return the ggplot object
 plot_map
 }

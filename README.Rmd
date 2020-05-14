@@ -35,12 +35,15 @@ The workflow to extract primary data and complete analyses is as follows:
 **Key packages needed for analyses and making figures**  
 `devtools`  
 `ggplot2`  
+`cowplot`  
 `dplyr`  
+`plyr`  
 `readxl`  
 `rvest`  
 `tidyverse`  
 `stringr`  
 `sf`  
+`raster`  
 `gstat`  
 `sp`  
 `ape`  
@@ -49,8 +52,9 @@ The workflow to extract primary data and complete analyses is as follows:
 `mgcv`  
 `visreg`  
 `PhyloMeasures`  
+`pals`(`devtools::install_github('kwstat/pals')`)  
 `BBS.occurrences`(`devtools::install_github('nicholasjclark/BBS.occurrences')`)  
-`mvtboost`(`devtools::install_github('patr1ckm/mvtboost)`)  
+`mvtboost`(`devtools::install_github('patr1ckm/mvtboost')`)  
   
 **References**  
 Albouy, C., Lasram, F.B.R., Velez, L., Guilhaumon, F., Meynard, C.N., Boyer, S., Benestan, L., Mouquet, N., Douzery, E., Aznar, R., Troussellier, M., Somot, S., Leprieur, F., Le Loc'h, F. & Mouillot, D. (2015) FishMed: traits, phylogeny, current and projected species distribution of Mediterranean fishes, and environmental data. Ecology, 96, 2312-2313.  

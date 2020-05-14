@@ -76,12 +76,15 @@ follows:
 figures**  
 `devtools`  
 `ggplot2`  
+`cowplot`  
 `dplyr`  
+`plyr`  
 `readxl`  
 `rvest`  
 `tidyverse`  
 `stringr`  
 `sf`  
+`raster`  
 `gstat`  
 `sp`  
 `ape`  
@@ -90,8 +93,9 @@ figures**
 `mgcv`  
 `visreg`  
 `PhyloMeasures`  
+`pals`(`devtools::install_github('kwstat/pals')`)  
 `BBS.occurrences`(`devtools::install_github('nicholasjclark/BBS.occurrences')`)  
-`mvtboost`(`devtools::install_github('patr1ckm/mvtboost)`)
+`mvtboost`(`devtools::install_github('patr1ckm/mvtboost')`)
 
 **References**  
 Albouy, C., Lasram, F.B.R., Velez, L., Guilhaumon, F., Meynard, C.N.,

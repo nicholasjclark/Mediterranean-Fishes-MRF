@@ -1,4 +1,4 @@
-#Function extract_Medfish to download MedFish datasets
+#### Function to download FishMed datasets and return a list of specified objects ####
 extract_MedFish <- function(dataset = "Pres.abs.data"){
   
   table.names <- c("Pres.abs.data","Functional.data","Climate.data",
@@ -10,6 +10,7 @@ extract_MedFish <- function(dataset = "Pres.abs.data"){
          "Phylogenetic.data"')
   }
   
+  # Datasets will be downloaded as a tempfile and then read into R as objects in a list
   temp <- tempfile()
   if(dataset=="Pres.abs.data"){
   download.file("https://ndownloader.figshare.com/files/5635563",temp)
@@ -53,7 +54,6 @@ extract_MedFish <- function(dataset = "Pres.abs.data"){
     Proj.2080.2099.Climate.dat<- read.table(unz(temp, "Climate_data/Projected_climatic_data_2080_2099.csv"),sep=';',
                                             header=T)
     unlink(temp)
-    
     return(list(Obs.1980.Climate.dat=Obs.1980.Climate.dat,
                 Proj.2040.2059.Climate.dat=Proj.2040.2059.Climate.dat,
                 Proj.2080.2099.Climate.dat=Proj.2080.2099.Climate.dat))

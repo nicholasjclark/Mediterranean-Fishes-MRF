@@ -97,13 +97,6 @@ plot_threshold_map = function(SST_data){
     geom_tile(data = sst_raster_df, aes(fill = cross_threshold,
                                         x = Longitude, y = Latitude),
               size = 0.85) +
-    # geom_point(data = SST_changes, aes(x = Longitude, y = Latitude, 
-    #                                   color = factor(cross_threshold, 
-    #                                                  levels = c('stays below',
-    #                                                             'crosses',
-    #                                                             'stays above'))),
-               # size = 0.35, alpha = I(0.7),
-               # shape = 15) +
     geom_rect(data = rects, aes(xmin = xstart, xmax = xend,
                                 ymin = ystart, ymax = yend),
               fill = 'gray85', colour = 'gray85') +
@@ -113,9 +106,6 @@ plot_threshold_map = function(SST_data){
                  size = 0.25) +
     scale_fill_manual(name = expression(paste('13'~degree,"C",' winter SST ', 'threshold')),
                       values = cols, drop = FALSE) +
-    # scale_color_viridis(name = expression(paste('13'~degree,"C",' winter SST ', 'threshold')),
-    #                     option = 'plasma',
-    #                     discrete = T, drop = FALSE) +
     theme(axis.text = element_text(size = 7)) +
     scale_x_longitude(xmin = -3, xmax = 35, step = 7) +
     scale_y_latitude(ymin = 30, ymax = 49, step = 5) +
@@ -208,7 +198,7 @@ plot_threshold_map = function(SST_data){
     plot_theme() + 
     ylab('Change in modularity') + xlab('')
   
-  # Put the plots together
+  # Put the plots together as a cowplot object and return
   cowplot::plot_grid(threshold_map,
                      cowplot::plot_grid(change_rich, change_div,change_mod, nrow = 1),
                      ncol = 1, rel_heights = c(1, 0.6),

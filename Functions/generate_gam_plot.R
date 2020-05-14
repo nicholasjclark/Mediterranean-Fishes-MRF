@@ -1,4 +1,4 @@
-#### Function to plot gam results ####
+#### Function to plot GAM prediction results ####
 generate_gam_plot = function(smooths, ylabel, y_decimal, season_labels = TRUE){
   library(ggplot2)
   
@@ -23,7 +23,7 @@ generate_gam_plot = function(smooths, ylabel, y_decimal, season_labels = TRUE){
 
   my_breaks <- function(x) { if (min(x) < 15) seq(10, 19, 3) else seq(20, 26, 3) }
   
-  # Smooth the summer SST predictions
+  # Smooth the summer SST upper and lower predictions
   g1.SST <- ggplot(smooths %>%
                      filter(char.Variable == 'Summer SST'), aes(x)) +
     stat_smooth(aes(y = lower), size = 0.05, colour = summer_col,
@@ -53,7 +53,7 @@ generate_gam_plot = function(smooths, ylabel, y_decimal, season_labels = TRUE){
                            ymin = built.WST$data[[1]]$y,
                            ymax = built.WST$data[[2]]$y)
   
-  ## Generate final plot
+  # Generate final plot as a ggplot object
   SST.smooth$char.Variable <- 'Summer SST'
   WST.smooth$char.Variable <- 'Winter SST'
   both.smooths  <- rbind(SST.smooth, WST.smooth)
