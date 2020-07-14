@@ -3,8 +3,9 @@
 
 This repository contains `R` scripts to extract data and replicate
 Conditional Random Fields analyses used in Clark *et al* “Rapid winter
-warming could disrupt coastal marine fish community structure” (IN PRESS
-in *Nature Climate Change*)
+warming could disrupt coastal marine fish community structure” (recently
+published in [*Nature Climate
+Change*](https://www.nature.com/articles/s41558-020-0838-5))
 
 **Overview**  
 We apply [Conditional Random
@@ -106,11 +107,15 @@ Albouy, C., Lasram, F.B.R., Velez, L., Guilhaumon, F., Meynard, C.N.,
 Boyer, S., Benestan, L., Mouquet, N., Douzery, E., Aznar, R.,
 Troussellier, M., Somot, S., Leprieur, F., Le Loc’h, F. & Mouillot, D.
 (2015) FishMed: traits, phylogeny, current and projected species
-distribution of Mediterranean fishes, and environmental data. Ecology,
+distribution of Mediterranean fishes, and environmental data. *Ecology*,
 96, 2312-2313.
 
 Clark, N.J., Wells, K. & Lindberg, O. (2018) MRFcov: Markov Random
 Fields with additional covariates. R package version 1.0. GitHub.
+
+Clark, N.J., Kerry, J.T. & Fraser, C.I. (2020) Rapid winter warming
+could disrupt coastal marine fish community structure. *Nature Climate
+Change* DOI: <https://doi.org/10.1038/s41558-020-0838-5>
 
 *This project is licensed under the terms of the GNU General Public
 License (GNU GPLv3)*
