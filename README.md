@@ -30,7 +30,7 @@ maintained by Nicholas Clark.
 **Contacts**  
 Please contact [Nicholas
 Clark](https://researchers.uq.edu.au/researcher/15140) with any
-questions or correspondence
+questions or correspondence.
 
 **Workflow**  
 The workflow to extract primary data and complete statistical analyses
@@ -55,7 +55,7 @@ is as follows:
     `Workflow/Appendix_S2_Models.pdf` is available to replicate this
     step, note that a previous version of `MRFcov` was used and so some
     of the argument names may have changed but most steps should still
-    work. Alos please note that these functions were originally run on a
+    work. Also please note that these functions were originally run on a
     high-performance computing cluster using 24 processing cores to
     speed up computations. The models will take several hours or more to
     complete even on a powerful machine. We have provided the original
